@@ -2,7 +2,8 @@ package com.pavel.webapp.controllers;
 
 import com.pavel.webapp.dto.UserLoginDto;
 import com.pavel.webapp.dto.UserRegisterDto;
-import com.pavel.webapp.services.PersonAccountService;
+
+import com.pavel.webapp.services.UserAccountService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
 
-    private final PersonAccountService personAccountService;
+    private final UserAccountService userAccountService;
 
-    public UserController(PersonAccountService personAccountService) {
-        this.personAccountService = personAccountService;
+    public UserController(UserAccountService userAccountService) {
+        this.userAccountService = userAccountService;
     }
 
     @GetMapping("/users/register")
@@ -26,7 +27,7 @@ public class UserController {
 
     @PostMapping("/users/register")
     public String register(UserRegisterDto user, Model model) {
-        boolean isRegistered = personAccountService.register(user);
+        boolean isRegistered = userAccountService.register(user);
         if (isRegistered) {
             return "redirect:/users/login";
         }
@@ -42,7 +43,7 @@ public class UserController {
     @PostMapping("/users/login")
     public String login(UserLoginDto userLoginDto, Model model, HttpServletRequest httpServletRequest) {
 
-        var userId = personAccountService.validateUserLogin(userLoginDto);
+        var userId = userAccountService.validateUserLogin(userLoginDto);
         if (userId == null) {
             model.addAttribute("error", "There is an error!");
             return "user/login.html";

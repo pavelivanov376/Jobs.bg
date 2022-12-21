@@ -2,35 +2,35 @@ package com.pavel.webapp.services;
 
 import com.pavel.webapp.dto.UserLoginDto;
 import com.pavel.webapp.dto.UserRegisterDto;
-import com.pavel.webapp.entities.PersonAccount;
-import com.pavel.webapp.repositories.PersonAccountRepository;
+import com.pavel.webapp.entities.UserAccount;
+import com.pavel.webapp.repositories.UserAccountRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonAccountServiceImpl implements PersonAccountService {
+public class UserAccountServiceImpl implements UserAccountService {
 
     public final ModelMapper mapper;
-    private final PersonAccountRepository personAccountRepository;
+    private final UserAccountRepository userAccountRepository;
 
-    public PersonAccountServiceImpl(PersonAccountRepository personAccountRepository, ModelMapper mapper) {
-        this.personAccountRepository = personAccountRepository;
+    public UserAccountServiceImpl(UserAccountRepository userAccountRepository, ModelMapper mapper) {
+        this.userAccountRepository = userAccountRepository;
         this.mapper = mapper;
     }
 
     @Override
     public boolean register(UserRegisterDto userDto) {
 
-        if (personAccountRepository.existsByUsernameOrEmail(userDto.getUsername(), userDto.getEmail())) {
+        if (userAccountRepository.existsByUsernameOrEmail(userDto.getUsername(), userDto.getEmail())) {
             return false;
         }
         if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {
             return false;
         }
 
-        var user = mapper.map(userDto, PersonAccount.class);
+        var user = mapper.map(userDto, UserAccount.class);
 
-        personAccountRepository.save(user);
+        userAccountRepository.save(user);
 
         return true;
     }
@@ -38,7 +38,7 @@ public class PersonAccountServiceImpl implements PersonAccountService {
     @Override
     public Long validateUserLogin(UserLoginDto userLoginDto) {
 
-        var personAccount = personAccountRepository.findFirstByUsername(userLoginDto.getUsername());
+        var personAccount = userAccountRepository.findFirstByUsername(userLoginDto.getUsername());
 
         if (personAccount == null) {
             return null;

@@ -2,7 +2,6 @@ package com.pavel.webapp.services;
 
 import com.pavel.webapp.dto.CreateJobDto;
 import com.pavel.webapp.entities.JobOffer;
-import com.pavel.webapp.entities.PersonAccount;
 import com.pavel.webapp.repositories.JobOfferRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

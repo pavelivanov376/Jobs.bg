@@ -2,6 +2,8 @@ package com.pavel.webapp.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name = "job_offers")
 public class JobOffer extends BaseEntity {
